@@ -5,25 +5,37 @@
 	<title>WebGi starter</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="./src/reset.css">
 </head>
 
 <body>
-	<nav>
-		<ul>
+	<nav class="header">
+		<ul class="header-links-container">
 			<li class="header-link">Cars</li>
 			<li class="header-link">Merch</li>
 			<li class="header-link">Models</li>
 			<li class="header-link">Dealerships</li>
 		</ul>
-		<div id="main-logo">
-
-		</div>
-		<ul>
+		<img id="main-logo" src="./assets/mercedes logo.png" />
+		<ul class="header-links-container">
 			<li class="header-link">contact us</li>
 			<li class="header-link">News</li>
 			<li class="header-link">search</li>
 		</ul>
 	</nav>
+
+	<div class="content-section" style="margin-top: 250px;">
+		<div class="content-title">DRIVE HOME YOUR <br/> NEW <span style="color: #DA4747;">V8 BEAST</span></div>
+		<div class="content-info">
+			Powered By the all new v8 turbo engine form
+			Mercedes’ world class engineers, the GT63 AMG roars like never before.
+		</div>
+		<div class="buttons-container" style="margin-top: 22px;">
+			<div class="button" style="background-color: #DA4747;" id="cta1">Book Now</div>
+			<div class="button" style="border:2px solid black; color: #DA4747;" id="cta2">View Specs</div>
+		</div>
+	</div>
+	<span class="stripe"></span>
 	<div id="webgi-canvas-container">
 		<canvas id="webgi-canvas"></canvas>
 	</div>
