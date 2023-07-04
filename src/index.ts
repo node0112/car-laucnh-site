@@ -2,19 +2,11 @@ import {
     ViewerApp,
     AssetManagerPlugin,
     GBufferPlugin,
-    timeout,
-    ProgressivePlugin,
     TonemapPlugin,
     SSRPlugin,
     SSAOPlugin,
-    DiamondPlugin,
-    FrameFadePlugin,
-    GLTFAnimationPlugin,
-    GroundPlugin,
     BloomPlugin,
-    TemporalAAPlugin,
-    AnisotropyPlugin,
-    GammaCorrectionPlugin,
+
 
     //addBasePlugins,
     ITexture, TweakpaneUiPlugin, AssetManagerBasicPopupPlugin, CanvasSnipperPlugin,
@@ -42,25 +34,18 @@ async function setupViewer(){
 
     // Add some plugins
     const manager = await viewer.addPlugin(AssetManagerPlugin)
+    const camera = viewer.scene.activeCamera
+    const position = camera.position
+    const target = camera.target 
 
     // Add a popup(in HTML) with download progress when any asset is downloading.
     await viewer.addPlugin(AssetManagerBasicPopupPlugin)
 
-    // Add plugins individually.
     await viewer.addPlugin(GBufferPlugin)
-    // await viewer.addPlugin(new ProgressivePlugin(32))
     await viewer.addPlugin(new TonemapPlugin(!viewer.useRgbm))
-    // await viewer.addPlugin(GammaCorrectionPlugin)
     await viewer.addPlugin(SSRPlugin)
     await viewer.addPlugin(SSAOPlugin)
-    // await viewer.addPlugin(DiamondPlugin)
-    // await viewer.addPlugin(FrameFadePlugin)
-    // await viewer.addPlugin(GLTFAnimationPlugin)
-    // await viewer.addPlugin(GroundPlugin)
     await viewer.addPlugin(BloomPlugin)
-    // await viewer.addPlugin(TemporalAAPlugin)
-    // await viewer.addPlugin(AnisotropyPlugin)
-    // and many more...
 
     // or use this to add all main ones at once.
     //await addBasePlugins(viewer)
@@ -82,6 +67,64 @@ async function setupViewer(){
     // Add plugins to the UI to see their settings.
     uiPlugin.setupPlugins<IViewerPlugin>(TonemapPlugin, CanvasSnipperPlugin)
 
+    //viewer.scene.activeCamera.position.set(-5,0, 1.5);
+
+
+    function setupScrollAnimation(){
+        const tl = gsap.timeline()
+    
+        // second section
+        tl
+        .to(position, {x: -0.44, y: 7.8,z: 1.9,
+            scrollTrigger:{
+                trigger: '#second', 
+                start: 'top bottom',  
+                end: 'top top', 
+                scrub: true},
+             onUpdate})
+            .to(target, {x: 0.2, y:-0.07,z: 1.61,
+                scrollTrigger:{
+                    trigger: '#second', 
+                    markers: true,
+                    start: 'top bottom',  
+                    end: 'top top', 
+                    scrub: true
+                }})
+
+        // third section
+        .to(position, {x: -0.43, y: -0.26,z: 3.9, 
+            scrollTrigger:{
+                trigger: '#third', 
+                markers: true,
+                start: 'top bottom',  
+                end: 'top top', 
+                scrub: true},
+             onUpdate})
+            .to(target, {x: -0.74, y: 0.05,z: 1.12,
+                scrollTrigger:{
+                    trigger: '#third', 
+                    start: 'top bottom',  
+                    end: 'top top', 
+                    scrub: true},
+                })
+    }
+
+    setupScrollAnimation()
+
+    let needsupdate = true
+    function onUpdate(){
+        needsupdate = true
+        viewer.renderer.resetShadows()
+    }
+
+    viewer.addEventListener('preFrame', ()=>{
+        if(needsupdate){
+            camera.positionUpdated(true)
+            camera.targetUpdated(true)
+            needsupdate = false 
+        }
+    })
 }
+
 
 setupViewer()

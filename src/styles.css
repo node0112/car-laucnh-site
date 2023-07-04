@@ -5,7 +5,7 @@
 
 body {
   font-family: sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
   margin: 0;
   background-color: #C6C0AD;
   overflow-y: scroll;
@@ -21,6 +21,7 @@ body {
   pointer-events: none;
   position: fixed;
   top: 0;
+  left: 0;
 }
 
 .header{
@@ -50,12 +51,15 @@ body {
 
 .content-section{
   width: calc(100vw - 120px);
+  height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin: 0 60px 0 60px;
+  justify-content: center;
+  margin: 0 60px 15vh 60px;
   text-align: right;
 }
+
 
 .content-title{
   font-family: 'title', sans-serif;
@@ -90,9 +94,10 @@ body {
 .stripe{
   width: 160vw;
   position: absolute;
-  top: 180%;
+  top: 170%;
   left: -400px;
   height: 350px;
   background-color: #DA4747;
   transform: rotate(23deg);
+  z-index: -1;
 }
